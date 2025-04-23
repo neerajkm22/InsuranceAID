@@ -1,0 +1,28 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-brokeraid-dev-5da23-authRole",
+      "UnauthRoleArn": "arn:aws:iam::305423889735:role/amplify-brokeraid-dev-5da23-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::305423889735:role/amplify-brokeraid-dev-5da23-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-brokeraid-dev-5da23-deployment",
+      "UnauthRoleName": "amplify-brokeraid-dev-5da23-unauthRole",
+      "StackName": "amplify-brokeraid-dev-5da23",
+      "StackId": "arn:aws:cloudformation:us-east-1:305423889735:stack/amplify-brokeraid-dev-5da23/1a4fd900-f2ce-11ef-825a-0e55ac7fee47",
+      "AmplifyAppId": "d22vfmkk0scefb"
+    },
+    "categories": {
+      "auth": {
+        "brokeraidad7318df": {},
+        "userPoolGroups": {}
+      }
+    }
+  },
+  "cynthy": {
+    "categories": {
+      "auth": {
+        "brokeraidad7318df": {}
+      }
+    }
+  }
+}

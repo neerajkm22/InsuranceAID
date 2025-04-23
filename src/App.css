@@ -1,0 +1,13 @@
+.viewmore{
+    float : right;
+    cursor: pointer;
+    text-decoration: none;
+    color: #0075B3;
+    width : 100%;
+}
+
+.indent {
+    display: block;
+    cursor: pointer;
+    color: #0075B3;
+}
