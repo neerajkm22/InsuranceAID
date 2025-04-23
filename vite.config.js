@@ -29,7 +29,7 @@ export default defineConfig({
         secure: false 
       },
       '/user': { 
-        target: 'https://qhp2v5ijya.execute-api.ap-south-1.amazonaws.com/search_histroy_api/', 
+        target: 'https://q9dql78t1i.execute-api.ap-south-1.amazonaws.com/search_histroy_api/', 
         changeOrigin: true,
        // rewrite: (path) => path.replace(/^\/signin-api/, ''),
         secure: false 
