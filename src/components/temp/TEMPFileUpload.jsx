@@ -31,7 +31,7 @@ const TEMPFileUpload = ({setUploadData}) => {
                 errors.push(`File type ${file.type} is not allowed!`);
             }
             if (file.size > allowedSize) {
-                errors.push(`File ${file.name} exceeds the size limit of 5MB!`);
+                errors.push(`File ${file.name} exceeds the size limit of 2MB!`);
             }
             if (file.name.length > fileNameCharacterLimit) {
                 errors.push(`File ${file.name} exceeds the file name character limit of 50!`);
