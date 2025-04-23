@@ -208,9 +208,9 @@ const ChatBox = () => {
                                 </a>
                             </div>
                             <div className="col-auto search-container">
-                                <button type="submit" className="btn searchbtn" title="Click to search BrokerAiD" alt="search BrokerAiD" onClick={() => getChat()}>
+                                <button type="submit" className="btn searchbtn" title="Click to search" alt="search" onClick={() => getChat()}>
                                     <span className="logo-lg">
-                                        <img src={sendImage} title="Click to search BrokerAiD" alt="search BrokerAiD" height="36" />
+                                        <img src={sendImage} title="Click to search" alt="search" height="36" />
                                     </span>
                                     <i className="mdi mdi-send float-end"></i>
                                 </button>

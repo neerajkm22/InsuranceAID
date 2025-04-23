@@ -11,19 +11,19 @@ export default defineConfig({
     port:5174,
     proxy: {
       '/api': {
-        target: 'https://r5xjohc0ff.execute-api.ap-south-1.amazonaws.com/prod/api/',
+        target: 'https://90l96cv8i5.execute-api.ap-south-1.amazonaws.com/prod/api/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
         secure: false
       },
       '/user_signup': { 
-        target: 'https://jy65jf8q34.execute-api.ap-south-1.amazonaws.com/', 
+        target: 'https://zsvsax9j10.execute-api.ap-south-1.amazonaws.com/', 
         changeOrigin: true,
        // rewrite: (path) => path.replace(/^\/signin-api/, ''),
         secure: false 
       },
       '/loggout_api': { 
-        target: 'https://z6a5606q8e.execute-api.ap-south-1.amazonaws.com/', 
+        target: 'https://ne5134ird4.execute-api.ap-south-1.amazonaws.com/', 
         changeOrigin: true,
        // rewrite: (path) => path.replace(/^\/signin-api/, ''),
         secure: false 
@@ -35,13 +35,13 @@ export default defineConfig({
         secure: false 
       },
       '/inactive': { 
-        target: 'https://sygbf78uph.execute-api.ap-south-1.amazonaws.com/prod/users/', 
+        target: 'https://fx9bprfh8h.execute-api.ap-south-1.amazonaws.com/prod/users/', 
         changeOrigin: true,
        // rewrite: (path) => path.replace(/^\/signin-api/, ''),
         secure: false 
       },
       '/users': { 
-        target: 'https://sygbf78uph.execute-api.ap-south-1.amazonaws.com/prod/users/', 
+        target: 'https://fx9bprfh8h.execute-api.ap-south-1.amazonaws.com/prod/users/', 
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/users/, ''),
         secure: false 
