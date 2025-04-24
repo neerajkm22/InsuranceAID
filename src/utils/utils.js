@@ -45,7 +45,7 @@ export const UserRoles = {
     FileUploadError: 'Something went wrong, Please try again.',
     FileUploadSuccess: 'File uploaded successfully.',
     FileUploadWrongFile: 'Please select valid files to upload!',
-    BannerMessage: 'Last 30 days circulars available for use.'
+    BannerMessage: ''
   }
 
   export const formatString = (str, ...args) => {

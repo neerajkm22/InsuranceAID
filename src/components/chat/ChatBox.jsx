@@ -169,9 +169,11 @@ const ChatBox = () => {
   return (
     <div className="col-lg-6 col-lg-8 chat">
         <div className="card chat card-height-100">
+        {ApplicationMessages.BannerMessage !== '' && (
             <div className="card-header align-items-center d-flex">	
                 <div className="banner-message">{ApplicationMessages.BannerMessage}</div>									
             </div>
+        )}
             <div className="card-body p-0">
                 <div className="chat-conversation p-3 simplebar-scrollable-y" id="chatwindow">
                     <div className="simplebar-content" >
@@ -189,7 +191,7 @@ const ChatBox = () => {
                                     disabled={showChatLoader ? "disabled" : ""}
                                     type="text" 
                                     className="form-control " 
-                                    placeholder="Message BrokerAiD..." 
+                                    placeholder="Message InsurAiD..." 
                                     onChange={(e) => setMessage(e.target.value)}
                                     onKeyDown={(e) => {
                                         if(e.key === 'Enter') {
