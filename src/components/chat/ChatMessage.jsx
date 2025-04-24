@@ -1,11 +1,21 @@
 import React, { useState,useContext, useEffect } from 'react';
+import parse from 'html-react-parser';
 import '../../App.css';
 import { AppContext } from '../../stores/AppContext';
 import ReactionPanel from './ReactionPanel';
 import { getChatData } from '../../services/api';
 import AnimatedChatMessage from './AnimatedChatMessage';
 
-const formatText = (text) => {
+
+const RichTextToJSX = ({ htmlContent }) => {
+  return (
+    <div className="rich-text-container">
+      {parse(htmlContent)}
+    </div>
+  );
+};
+
+const formatText = (text) => {  
   return text.split(/\n/g).map((item, index) => (
     <React.Fragment key={index}>
       {item}
@@ -15,11 +25,10 @@ const formatText = (text) => {
   ));
 };
 
-
 const ChatMessage = ({message, userName, type, summary, scrollcallback, responseId, question, chatId, animateChatMessage,isliked,isdisliked}) => {
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
   const [viewLabelText, setViewLabelText] = useState('view more...');
-  const [chatMessage, setChatMessage] = useState('');
+  const [chatMessage, setChatMessage] = useState('');  
   const [chatSummary, setChatSummary] = useState('');
   const { state, dispatch } = useContext(AppContext);
   const [renderingAnimatedChatMessage, setRenderingAnimatedChatMessage] = useState(false);
@@ -72,15 +81,16 @@ const ChatMessage = ({message, userName, type, summary, scrollcallback, response
             <div className={type}>{userName}</div>													
             <div className="user-chat-content">
                 <div className="ctext-wrap">
-                    <div className="ctext-wrap-content">
-                        <p className="mb-0 ctext-content">{animateChatMessage ? <AnimatedChatMessage message={message} doneChatAnimation={doneChatAnimation} /> : formatText(chatMessage)}</p>
+                    <div className="ctext-wrap-content">                               
+                        <div className="mb-0 ctext-content">{animateChatMessage ? <AnimatedChatMessage message={message} doneChatAnimation={doneChatAnimation} /> : <RichTextToJSX htmlContent={chatMessage} />}</div>
+                        {/*<div className="mb-0 ctext-content">{animateChatMessage ? <AnimatedChatMessage message={message} doneChatAnimation={doneChatAnimation} /> : formatText(chatMessage)}</div>*/}
                         {!renderingAnimatedChatMessage && chatSummary?.length>0 && 
                           <span className='viewmore' onClick={() => setSummaryVisible(!isSummaryVisible)}>{viewLabelText}</span>
                         }
                          {!renderingAnimatedChatMessage && isSummaryVisible && (
                             <div>
                               {chatSummary.map((item, index) => (
-                                 <span className='indent' key={index} onClick={() => showSummary(item)}> {index+1}. {(item.metadata.source.split("?")[0]).split('/').pop().substring(0, 15) }...  </span> 
+                                 <span className='indent' key={index} onClick={() => showSummary(item)}> {index+1}. {item.metadata.filename.substring(0, 15) }...  </span> 
                               ))}
                             </div>
                             
