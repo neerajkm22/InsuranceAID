@@ -2,8 +2,10 @@ import { useContext, useEffect, useState } from "react"
 import DataTable from "react-data-table-component";
 import { BarLoader } from 'react-spinners';
 import { getFormattedDate } from "../../utils/utils";
-import { getTEMP } from "../../services/temp";
+import { getTEMP,delTEMP } from "../../services/temp";
 import { AppContext } from '../../stores/AppContext';
+import { message,Popconfirm } from "antd";
+import { ApplicationMessages,formatString,UserStatus } from "../../utils/utils";
 
 const TEMPGrid = ({uploadData}) => {
     const context = useContext(AppContext);
@@ -33,7 +35,52 @@ const TEMPGrid = ({uploadData}) => {
 
     useEffect(() => {
         setDisplayData(formatTEMPData(data));
-    }, [data])
+    }, [data]);
+
+    const UserDeleteFile = ({username, id, filename}) => {
+    
+        const confirm = (username, id) => (e) => {
+            e.stopPropagation(); // Prevent scroll caused by event propagation
+            handleStatusClick(username, id);
+        };
+    
+        const handleStatusClick = async (username, id) => {            
+            try {
+                const statusUpdateReponse = await delTEMP(username, id, state.sessionTokenId);
+                if(statusUpdateReponse==200){                    
+                    message.success(ApplicationMessages.UserFileDeleteMessage);    
+                    
+                    (async () => {
+                        try {
+                            const response = await getTEMP(state.userId,state.sessionTokenId);
+                            if(response) {
+                                setData(response);
+                                setPending(false);
+                            }
+                        } catch (error) {
+                            console.error(error);
+                        }
+                    })();
+
+                }else{
+                    message.error(ApplicationMessages.ErrorMsg);
+                }         
+            } catch (error) {
+                console.error('Error deleting file:', error);
+            }
+        };
+        
+        return (
+        <Popconfirm
+        title={ApplicationMessages.UserFileDeleteTitle}
+        description={formatString(ApplicationMessages.UserFileDeleteDescription, filename)}
+        onConfirm={confirm(username,id)}
+        okText="Yes"
+        cancelText="Cancel">                    
+        <button type="button" className="btn btn-danger btn-sm">Delete</button>               
+        </Popconfirm>
+        );
+    }    
 
     const formatTEMPData = (tempData) => {
         const userTEMPData = [];
@@ -41,11 +88,12 @@ const TEMPGrid = ({uploadData}) => {
             if(tempData) {
                 tempData.forEach((val, index) => {
                     userTEMPData.push({
-                            srno: (index + 1),
-                            name: val.filename,
-                            uploadedBy: val.uploadedby,
-                            uploadedTime: val.uploadedat
-                        });
+                        srno: (index + 1),
+                        fileid: val.id,
+                        name: val.filename,
+                        uploadedBy: val.uploadedby,
+                        uploadedTime: val.uploadedat
+                    });
                 });
             }      
         } catch (error) {
@@ -74,6 +122,10 @@ const TEMPGrid = ({uploadData}) => {
         {
             name: 'Uploaded Time',
             selector: row => row.uploadedTime,
+        },
+        {
+            name: 'Action',
+            selector: row =><UserDeleteFile username={row.uploadedBy}  id={row.fileid} filename={row.name}/>,
         }
     ];
 

@@ -4,6 +4,7 @@ const ENV_MODE  = import.meta.env.MODE;
 
 const VITE_GET_TEMP_DATA = import.meta.env.VITE_GET_TEMP_DATA;
 const VITE_UPLOAD_TEMP = import.meta.env.VITE_UPLOAD_TEMP;
+const VITE_DELETE_TEMP_FILE = import.meta.env.VITE_DELETE_TEMP_FILE;
 
 export const getTEMP = async (userid, authorization_token) => {
     try {
@@ -41,6 +42,28 @@ export const uploadTEMP = async (formData, authorization_token) => {
         return response.data ? response.data : {}      
     } catch (error) {
         console.error('Error uploading TEMP:', error);
+    }
+
+    return {}
+}
+
+export const delTEMP = async (username, id, authorization_token) => {
+    try {
+           
+        const response = await axios({
+            headers: {
+                "accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization":authorization_token
+            },
+            method: 'post',
+            url:VITE_DELETE_TEMP_FILE,
+            data: {username, id}
+        });
+        
+        return response.data.statusCode ? response.data.statusCode : {}
+    } catch (error) {
+        console.error(error);
     }
 
     return {}

@@ -45,7 +45,10 @@ export const UserRoles = {
     FileUploadError: 'Something went wrong, Please try again.',
     FileUploadSuccess: 'File uploaded successfully.',
     FileUploadWrongFile: 'Please select valid files to upload!',
-    BannerMessage: ''
+    BannerMessage: '',
+    UserFileDeleteTitle:'User file delete',
+    UserFileDeleteDescription:'Are you sure you want to delete file {0}?',
+    UserFileDeleteMessage:'File deleted successfully',
   }
 
   export const formatString = (str, ...args) => {
