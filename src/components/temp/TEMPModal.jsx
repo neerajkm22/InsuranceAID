@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import TEMPFileUpload from './TEMPFileUpload';
 import TEMPGrid from './TEMPGrid';
+import { SESSION_DISK_SPACE_LIMIT } from './config';
 
 const TEMPModal = () => {
     const modalTitle = "Upload files for current session";
     const [showUpload, setShowUpload] = useState(false);
     const [uploadData, setUploadData] = useState([]);
+    const sessionDiskSpaceLimit = SESSION_DISK_SPACE_LIMIT;
 
     useEffect(() => {
       document.getElementById('tempModal').addEventListener('shown.bs.modal', () => {
@@ -28,6 +30,10 @@ const TEMPModal = () => {
         </div>
         <div className="modal-body">
           {showUpload && <TEMPFileUpload setUploadData={setUploadData} />}
+          <div style={{marginTop: '10px'}}>
+                <span id="ads" style={{color: 'blue'}}>Allocated Disk Space: {sessionDiskSpaceLimit} MB</span><br/>  
+                <span style={{color: 'green'}}>Used: <span id="usd"></span>MB</span><br/>                                         
+            </div>
           {showUpload && <TEMPGrid uploadData={uploadData} />}
         </div>
       </div>

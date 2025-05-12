@@ -12,15 +12,16 @@ const TEMPGrid = ({uploadData}) => {
     const { state, dispatch } = context;  
     const [pending, setPending] = useState(true);
     const [data, setData] = useState([]); // data coming from API
-    const [displayData, setDisplayData] = useState([]); // formated data
-
+    const [displayData, setDisplayData] = useState([]); // formated data   
+    
     useEffect(() => {
 
         (async () => {
             try {
                 const response = await getTEMP(state.userId,state.sessionTokenId);
                 if(response) {
-                    setData(response);
+                    setData(response.files);
+                    document.getElementById('usd').innerHTML = (response.total_filesize_mb)?response.total_filesize_mb: 0;
                     setPending(false);
                 }
             } catch (error) {
@@ -54,7 +55,8 @@ const TEMPGrid = ({uploadData}) => {
                         try {
                             const response = await getTEMP(state.userId,state.sessionTokenId);
                             if(response) {
-                                setData(response);
+                                setData(response.files);  
+                                document.getElementById('usd').innerHTML = (response.total_filesize_mb)?response.total_filesize_mb: 0;                              
                                 setPending(false);
                             }
                         } catch (error) {
@@ -85,14 +87,15 @@ const TEMPGrid = ({uploadData}) => {
     const formatTEMPData = (tempData) => {
         const userTEMPData = [];
         try {
-            if(tempData) {
+            if(tempData) {                
                 tempData.forEach((val, index) => {
                     userTEMPData.push({
                         srno: (index + 1),
                         fileid: val.id,
                         name: val.filename,
                         uploadedBy: val.uploadedby,
-                        uploadedTime: val.uploadedat
+                        uploadedTime: val.uploadedat,
+                        fileSize: val.filesize_mb
                     });
                 });
             }      
@@ -124,8 +127,14 @@ const TEMPGrid = ({uploadData}) => {
             selector: row => row.uploadedTime,
         },
         {
+            name: 'Size (MB)',
+            selector: row => row.fileSize,
+            maxWidth: '15px'
+        },
+        {
             name: 'Action',
             selector: row =><UserDeleteFile username={row.uploadedBy}  id={row.fileid} filename={row.name}/>,
+            maxWidth: '20px'
         }
     ];
 

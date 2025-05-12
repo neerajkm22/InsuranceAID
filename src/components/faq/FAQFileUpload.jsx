@@ -4,7 +4,7 @@ import { ApplicationMessages } from "../../utils/utils";
 import { AppContext } from '../../stores/AppContext';
 import { ALLOWED_FILE_TYPES, ALLOWED_SIZE, FILE_NAME_CHARACTER_LIMIT } from './config';
 import {message} from "antd";
-import { ClipLoader } from 'react-spinners';
+import { ScaleLoader  } from 'react-spinners';
 
 const FAQFileUpload = ({setUploadData}) => {
     const context = useContext(AppContext);
@@ -114,7 +114,7 @@ const FAQFileUpload = ({setUploadData}) => {
                     Upload
                 </button>
                 &nbsp;
-                {uploadPending && <ClipLoader color="#2672ca" />}
+                {uploadPending && <ScaleLoader color='#6691e7' style={{paddingLeft:'10px'}}/>}
             </div>
             {fileList.length > 0 && (
                 <ul className="valid-feedback" style={{ display: 'block' }}>

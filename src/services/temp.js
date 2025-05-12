@@ -19,7 +19,7 @@ export const getTEMP = async (userid, authorization_token) => {
             params: {userid}
         });
         
-        return response.data.files ? response.data.files : {}
+        return response.data ? response.data : {}
     } catch (error) {
         console.error(error);
     }

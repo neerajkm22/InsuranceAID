@@ -4,7 +4,7 @@ import { ApplicationMessages } from "../../utils/utils";
 import { AppContext } from '../../stores/AppContext';
 import { ALLOWED_FILE_TYPES, ALLOWED_SIZE, FILE_NAME_CHARACTER_LIMIT } from './config';
 import {message} from "antd";
-import { ClipLoader } from 'react-spinners';
+import { ScaleLoader} from 'react-spinners';
 
 const TEMPFileUpload = ({setUploadData}) => {
     const context = useContext(AppContext);
@@ -18,7 +18,7 @@ const TEMPFileUpload = ({setUploadData}) => {
 
     const fileNameCharacterLimit = FILE_NAME_CHARACTER_LIMIT;
     const allowedSize = ALLOWED_SIZE;
-    const allowedFileTypes = ALLOWED_FILE_TYPES;
+    const allowedFileTypes = ALLOWED_FILE_TYPES;    
   
     const handleFileChange = (e) => {
         const fileDataList = [];
@@ -114,7 +114,7 @@ const TEMPFileUpload = ({setUploadData}) => {
                     Upload
                 </button>
                 &nbsp;
-                {uploadPending && <ClipLoader color="#2672ca" />}
+                {uploadPending && <ScaleLoader color='#6691e7' style={{paddingLeft:'10px'}}/>}
             </div>
             {fileList.length > 0 && (
                 <ul className="valid-feedback" style={{ display: 'block' }}>
@@ -132,7 +132,7 @@ const TEMPFileUpload = ({setUploadData}) => {
             )}
             <div style={{fontSize: '10px', color: 'red'}}>   
                 <span>Note: Allowed filename length is {fileNameCharacterLimit} character.<br/>Allowed file type: {allowedFileTypes} <br/>Maximum allowed file size is {allowedSize/1024/1024} MB! </span>
-            </div>
+            </div>            
         </div>
         
     );
