@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from 'react';
-import { uploadTEMP } from '../../services/temp';
+import { uploadTEMP, getTEMP } from '../../services/temp';
 import { ApplicationMessages } from "../../utils/utils";
 import { AppContext } from '../../stores/AppContext';
 import { ALLOWED_FILE_TYPES, ALLOWED_SIZE, FILE_NAME_CHARACTER_LIMIT } from './config';
@@ -13,7 +13,7 @@ const TEMPFileUpload = ({setUploadData}) => {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [fileList, setFileList] = useState([]);
     const [uploadPending, setUploadPending] = useState(false);
-    
+       
     const fileInputRef = useRef(null); // Add a ref to the file input
 
     const fileNameCharacterLimit = FILE_NAME_CHARACTER_LIMIT;
@@ -74,22 +74,39 @@ const TEMPFileUpload = ({setUploadData}) => {
 
         try {
             const response = await uploadTEMP(formData, state.sessionTokenId);
-            console.log(response);
+            
             if(response && response.filename) {
-                setUploadData([response])
-            }
+                setUploadData([response]);
+                setErrorMessages([]);
+                setSelectedFiles([]);
+                setFileList([]);
+                fileInputRef.current.value = ''; // Reset the file input
+                message.success(ApplicationMessages.FileUploadSuccess)
+                setUploadPending(false);
 
-            setErrorMessages([]);
-            setSelectedFiles([]);
-            setFileList([]);
-            fileInputRef.current.value = ''; // Reset the file input
-            message.success(ApplicationMessages.FileUploadSuccess)
-            setUploadPending(false);
+                (async () => {
+                    try {
+                        const response = await getTEMP(state.userId,state.sessionTokenId);
+                        if(response) {                            
+                            document.getElementById('usd').innerHTML = (response.total_filesize_mb)?response.total_filesize_mb: 0;
+                            
+                        }
+                    } catch (error) {
+                        console.error(error);
+                    }
+                })();                   
+            }            
 
         } catch (error) {
-            setErrorMessages(['Error uploading files.']);
-            message.error(error.message);
-            setUploadPending(false);
+            if (error.message.includes('504')) {
+            // Handle 504 error specifically
+            console.error('Gateway Timeout Error:', error);
+            // Implement retry logic or display an error message to the user
+            } else {
+                setErrorMessages(['Error uploading files.']);
+                message.error(error.message);
+                setUploadPending(false);
+            }            
         }
     };
 
