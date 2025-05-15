@@ -48,6 +48,7 @@ export const UserRoles = {
     BannerMessage: '',
     UserFileDeleteTitle:'User file delete',
     UserFileDeleteDescription:'Are you sure you want to delete file {0}?',
+    UserSelectedFileDeleteDescription:'Are you sure you want to delete {0} selected files?',
     UserFileDeleteMessage:'File deleted successfully',
   }
 

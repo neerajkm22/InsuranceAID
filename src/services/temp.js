@@ -68,3 +68,25 @@ export const delTEMP = async (username, id, authorization_token) => {
 
     return {}
 }
+
+export const delSelTEMP = async (username, file_ids, authorization_token) => {
+    try {
+           
+        const response = await axios({
+            headers: {
+                "accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization":authorization_token
+            },
+            method: 'post',
+            url:VITE_DELETE_TEMP_FILE,
+            data: {username, file_ids}
+        });
+        
+        return response.data.statusCode ? response.data.statusCode : {}
+    } catch (error) {
+        console.error(error);
+    }
+
+    return {}
+}
